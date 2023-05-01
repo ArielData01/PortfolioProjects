@@ -19,7 +19,7 @@ Where continent is not null
 Order by 1,2;
 
 -- Analizando el total de casos frente vs total de muertes
--- Muestra la probabilidad de morir si contrae covid en su paÌs
+-- Muestra la probabilidad de morir si contrae covid en su pa√≠s
 SELECT location, date, total_cases, total_deaths, 
        (CASE WHEN TRY_CONVERT(float,total_cases) = 0 THEN 0 ELSE (total_deaths/TRY_CONVERT(float,total_cases)) END)*100 AS DeathPercentage
 FROM PortfolioProject..CovidDeaths
@@ -28,8 +28,8 @@ and continent is not null
 ORDER BY 1,2;
 
 
---El total de casos vs a la poblaciÛn
---Muestra quÈ porcentaje de la poblaciÛn contrajo covid en todo el planeta
+--El total de casos vs a la poblaci√≥n
+--Muestra qu√© porcentaje de la poblaci√≥n contrajo covid en todo el planeta
 SELECT location, date,population,  total_cases, 
        CASE WHEN TRY_CONVERT(float,total_cases) = 0 THEN 0 ELSE (total_cases/TRY_CONVERT(float,population))*100 END AS Population_Percentage
 FROM PortfolioProject..CovidDeaths
@@ -37,7 +37,7 @@ FROM PortfolioProject..CovidDeaths
 ORDER BY 1,2;
 
 
---Observando los paÌses con la tasa de infecciÛn m·s alta en comparaciÛn con la poblaciÛn
+--Observando los pa√≠ses con la tasa de infecci√≥n m√°s alta en comparaci√≥n con la poblaci√≥n
 SELECT location,population,  MAX(total_cases) AS HighestInfectionCount, 
        MAX(CASE WHEN TRY_CONVERT(float,total_cases) = 0 THEN 0 ELSE (total_cases/TRY_CONVERT(float,population))*100 END) AS PercentagePopulationInfected
 FROM PortfolioProject..CovidDeaths
@@ -46,7 +46,7 @@ GROUP BY location, population
 ORDER BY PercentagePopulationInfected desc;
 
 
---Mostrando paÌses con mayor recuento por poblaciÛn por paÌs
+--Mostrando pa√≠ses con mayor recuento por poblaci√≥n por pa√≠s
 SELECT location,MAX(cast(Total_deaths as float)) as TotalDeathCount
 FROM PortfolioProject..CovidDeaths
 Where continent is not null
@@ -71,7 +71,7 @@ WHERE continent IS NOT NULL
 ORDER BY 1,2;
 
 
---Observamos el Total PoblaciÛn vs los vacunados
+--Observamos el Total Poblaci√≥n vs los vacunados
 Select dea.continent, dea.location,dea.date, dea.population, vac.new_vaccinations
 , SUM(TRY_CONVERT (FLOAT,vac.new_vaccinations)) OVER (PARTITION BY dea.location Order by dea.location,
 dea.date) as RollngPeopleVaccinated 
